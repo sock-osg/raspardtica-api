@@ -4,7 +4,7 @@ var exec = require('child_process');
 var controlCommand = {};
 
 controlCommand.sendCommand = function(command, deviceId) {
-  exec.execFile('../remote', ['-c', command, '-d', deviceId], function (error, stdout, stderr) {
+  exec.execFile('../remote', ['-a', command, '-d', deviceId], function (error, stdout, stderr) {
     var state = -1;
     console.log('stdout: ' + stdout);
     console.log('stderr: ' + stderr);
@@ -14,6 +14,7 @@ controlCommand.sendCommand = function(command, deviceId) {
 
     if (error !== null) {
       console.log('exec error: ' + error);
+      throw error;
     }
     return state;
   });
