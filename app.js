@@ -5,6 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:5432/oz-raspardica');
+
 var routes = require('./src/routes/index');
 var devices = require('./src/routes/devices');
 
