@@ -28,7 +28,10 @@ router.get('/status/:deviceId', function(request, response) {
     deviceId: deviceId
   };
 
-  return response.json({status: devicesController.getStatus(data)});
+  return response.json({
+    deviceId: deviceId,
+    status: devicesController.getStatus(data)
+  });
 });
 
 module.exports = router;
