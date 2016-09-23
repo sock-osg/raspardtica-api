@@ -1,13 +1,9 @@
 var express = require('express');
-//var router = express.Router();
 
 module.exports = function(server) {
   'use strict';
-
   var dir = require('node-dir');
   var path = require('path');
-  var util = require('util')
-
 
   /**
    * @exports routes
@@ -48,15 +44,12 @@ module.exports = function(server) {
      * @private
      */
     _createRoutes: function(controller, path) {
-      console.log(util.inspect(controller, {showHidden: false, depth: null}));
-
       controller = controller || {};
       controller.routes = controller.routes || [];
       path = path || '';
-      for (var i = 0; i < controller.length; i++) {
-        console.log("Setting " + controller[i]);
-        var controllerConfig = controller[i].config;
-        server[controllerConfig.method]({url: path + controllerConfig.route, validation: controllerConfig.validation}, controller[i]._function);
+      for (var i = 0; i < controller.routes.length; i++) {
+        var route = controller.routes[i];
+        server[route.method](path + route.route, controller[route.action]);
       }
     }
   };

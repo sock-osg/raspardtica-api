@@ -17,8 +17,8 @@ routes.generateRoutes(path.resolve(__dirname + '/..') + '/src/controllers/', fun
   var swaggerOptions = {
     swaggerDefinition: {
       info: {
-        title: 'Digital Assets',
-        version: '1.0.0'
+        title: 'OZ Raspardtica API',
+        version: '1.0'
       },
       basePath: '/api',
       produces: ['application/json']
@@ -35,21 +35,18 @@ routes.generateRoutes(path.resolve(__dirname + '/..') + '/src/controllers/', fun
   server.initialized = true;
 
   server.listen(config.port, function () {
-    console.log(server.name + ' listening at ' + server.url);
+    console.log('listening at port ' + config.port);
   });
 
-  /*mongoose.connect(config.mongodb, function (err) {
-    if (err) {
-      throw err;
+  console.log("\nRegistered routes:");
+  for (var index = 0; index < server._router.stack.length; index++) {
+    var layer = server._router.stack[index];
+
+    if (layer.route === undefined) {
+      continue;
     }
-    console.log('Successfully connected to MongoDB');
-  });*/
+    console.log("\t" + layer.route.path);
+  }
 });
-/**
- * Default callback
- * @callback defaultCallback
- * @param {Error} error - The error object
- * @param {*} [data] - The data
- */
 
 module.exports = server;
