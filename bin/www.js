@@ -1,10 +1,16 @@
 var config = require('../config');
 var express = require('express');
+var bodyParser = require('body-parser');
 var path = require('path');
+var mongoose = require('mongoose');
 
 var server = express();
-
+ 
 var routes = require('../src/routes')(server);
+
+// Middlewares
+server.use(bodyParser.json()); // for parsing application/json
+server.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 routes.generateRoutes(path.resolve(__dirname + '/..') + '/src/controllers/', function (err, routes) {
   if (err) {
@@ -32,12 +38,6 @@ routes.generateRoutes(path.resolve(__dirname + '/..') + '/src/controllers/', fun
     res.json(swaggerSpec);
   });
 
-  server.initialized = true;
-
-  server.listen(config.port, function () {
-    console.log('listening at port ' + config.port);
-  });
-
   console.log("\nRegistered routes:");
   for (var index = 0; index < server._router.stack.length; index++) {
     var layer = server._router.stack[index];
@@ -46,7 +46,19 @@ routes.generateRoutes(path.resolve(__dirname + '/..') + '/src/controllers/', fun
       continue;
     }
     console.log("\t" + layer.route.path);
-  }
+  };
+
+  mongoose.connect(config.mongodb, function (err) {
+    if (err) {
+      throw err;
+    }
+    console.log('Successfully connected to MongoDB');
+  });
+    
+  server.initialized = true;
+  server.listen(config.port, function () {
+    console.log('listening at port ' + config.port);
+  });
 });
 
 module.exports = server;

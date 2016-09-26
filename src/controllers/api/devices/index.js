@@ -1,22 +1,43 @@
 'use strict';
+var Device = require('../../../models/devices');
+var User = require('../../../models/users');
+
 var devicesController = {};
 
-devicesController.getAll = function(req, res) {
-  res.json({
-    devices: [
-      {
-        id: 1,
-        address: "0x00000a",
-        alias: "Water engine",
-        enabled: true
-      },
-      {
-        id: 2,
-        address: "0x00000b",
-        alias: "Main Door",
-        enabled: false
-      }
-    ]
+devicesController.myDevices = function(req, res) {
+  User.find({username: req.params.username}, {devices: 1, _id: 0}, function(err, devices) {
+    if (err) {
+      res.json(err);
+      res.status(500);
+    }
+    res.json(devices);
+  });
+};
+
+devicesController.create = function(req, res) {
+  var device = new Device({
+    address: req.body.address,
+    alias: req.body.alias,
+    description: req.body.description
+  });
+  User.findOneAndUpdate({username: req.params.username}, {$push: {devices: device}}, {safe: true, upsert: true}, function(err, _device) {
+    if (err) {
+      res.json(err);
+      res.status(500);
+    }
+    res.status(201);
+    res.json(_device);
+  });
+};
+
+devicesController.delete = function(req, res) {
+  Device.findOneAndRemove({username: req.params.username, "devices._id": req.params.deviceId}, function(err, offer) {
+    if (err) {
+      res.json(err);
+      res.status(500);
+    }
+    res.status(200);
+    res.json(offer);
   });
 };
 
@@ -24,8 +45,18 @@ devicesController.routes = [
   {
     route: "/:username",
     method: "get",
-    action: "getAll"
-  }
+    action: "myDevices"
+  },
+  {
+    route: "/create/:username",
+    method: "post",
+    action: "create"
+  },
+  {
+    route: "/:username/:deviceId",
+    method: "delete",
+    action: "delete"
+  },
 ];
 
 module.exports = devicesController;

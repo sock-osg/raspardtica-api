@@ -4,7 +4,7 @@ module.exports = (function () {
   var config = {
     development: {
       port: 8080,
-      mongodb: 'mongodb://localhost/bccertifications'
+      mongodb: 'mongodb://localhost/oz-raspardtica'
     },
     production: {}
   };
