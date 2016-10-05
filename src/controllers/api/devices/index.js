@@ -20,13 +20,21 @@ devicesController.create = function(req, res) {
     alias: req.body.alias,
     description: req.body.description
   });
-  User.findOneAndUpdate({username: req.params.username}, {$push: {devices: device}}, {safe: true, upsert: true}, function(err, _device) {
+  User.findOne({username: req.params.username}, function(err, user) {
     if (err) {
       res.json(err);
       res.status(500);
     }
-    res.status(201);
-    res.json(_device);
+    user.devices.push(device);
+    user.save(function (err, user) {
+      if (err) {
+        res.json(err);
+        res.status(500);
+      } else {
+        res.status(201);
+        res.json(device);
+      }
+    })
   });
 };
 
