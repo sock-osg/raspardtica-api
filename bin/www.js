@@ -5,12 +5,17 @@ var path = require('path');
 var mongoose = require('mongoose');
 
 var server = express();
- 
+
 var routes = require('../src/routes')(server);
 
 // Middlewares
 server.use(bodyParser.json()); // for parsing application/json
 server.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+server.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 routes.generateRoutes(path.resolve(__dirname + '/..') + '/src/controllers/', function (err, routes) {
   if (err) {
@@ -45,7 +50,7 @@ routes.generateRoutes(path.resolve(__dirname + '/..') + '/src/controllers/', fun
     if (layer.route === undefined) {
       continue;
     }
-    console.log("\t" + layer.route.path);
+    console.log("\t" + layer.route.stack[0].method + "\t -> " + layer.route.path);
   };
 
   mongoose.connect(config.mongodb, function (err) {
@@ -54,7 +59,7 @@ routes.generateRoutes(path.resolve(__dirname + '/..') + '/src/controllers/', fun
     }
     console.log('Successfully connected to MongoDB');
   });
-    
+
   server.initialized = true;
   server.listen(config.port, function () {
     console.log('listening at port ' + config.port);
