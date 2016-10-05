@@ -1,6 +1,6 @@
 'use strict';
-var Device = require('../../../models/devices');
 var User = require('../../../models/users');
+var mongoose = require('mongoose');
 
 var devicesController = {};
 
@@ -15,23 +15,29 @@ devicesController.myDevices = function(req, res) {
 };
 
 devicesController.create = function(req, res) {
-  var device = new Device({
+  var device = {
+    _id: new mongoose.Types.ObjectId,
     address: req.body.address,
     alias: req.body.alias,
     description: req.body.description
-  });
-  User.findOneAndUpdate({username: req.params.username}, {$push: {devices: device}}, {safe: true, upsert: true}, function(err, _device) {
-    if (err) {
-      res.json(err);
-      res.status(500);
+  };
+  User.findOneAndUpdate(
+    {username: req.params.username},
+    {$push: {devices: device}},
+    {safe: true, upsert: true},
+    function(err, _device) {
+      if (err) {
+        res.json(err);
+        res.status(500);
+      }
+      res.status(201);
+      res.json(_device);
     }
-    res.status(201);
-    res.json(_device);
-  });
+  );
 };
 
 devicesController.delete = function(req, res) {
-  Device.findOneAndRemove({username: req.params.username, "devices._id": req.params.deviceId}, function(err, offer) {
+  User.update({username: req.params.username}, {$pull: {"devices": {_id: req.params.deviceId}}}, function(err, offer) {
     if (err) {
       res.json(err);
       res.status(500);

@@ -6,9 +6,10 @@ var UserSchema = new Schema({
   username: { type: String, required: true, unique: true },
   fullName: { type: String, required: true },
   devices: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Device',
-    required: true
+    _id: Schema.Types.ObjectId,
+    address: { type: String, required: true },
+    alias: { type: String, required: true },
+    description: { type: String, required: true }
   }]
 });
 
