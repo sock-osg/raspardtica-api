@@ -1,16 +1,37 @@
 'use strict';
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 
-var UserSchema = new Schema({
-  username: { type: String, required: true, unique: true },
-  fullName: { type: String, required: true },
-  devices: [{
-    _id: Schema.Types.ObjectId,
-    address: { type: String, required: true },
-    alias: { type: String, required: true },
-    description: { type: String, required: true }
-  }]
-});
-
-module.exports = mongoose.model('User', UserSchema);
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define('users', {
+    id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+      unique: true
+    },
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    }
+  }, {
+    tableName: 'users',
+    classMethods: {
+      associate: function (models) {
+          models.users.belongsTo(models.devices);
+      }
+    }
+  });
+};

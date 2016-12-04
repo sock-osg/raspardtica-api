@@ -2,12 +2,15 @@ module.exports = (function () {
   'use strict';
 
   var config = {
-    development: {
-      port: 8080,
-      mongodb: 'mongodb://localhost/oz-raspardtica'
+    dev: {
+      db: {
+        storage: '/apps/oz/services/raspardtika/db',
+        dialect: 'sqlite',
+        pool: 10
+      }
     },
-    production: {}
+    prod: {}
   };
 
-  return config[process.env.NODE_ENV || 'development'];
+  return config[process.env.NODE_ENV || 'dev'];
 })();

@@ -6,13 +6,20 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "acl": "^0.4.9",
+    "assert-plus": "^0.1.5",
     "body-parser": "~1.15.1",
+    "bunyan": "^1.8.5",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "express": "~4.13.4",
-    "mongoose": "^4.6.1",
     "morgan": "~1.7.0",
     "node-dir": "^0.1.16",
+    "node-restify-validation": "^1.0.5",
+    "restify": "^4.3.0",
+    "restify-bunyan-logger": "^2.0.7",
+    "sequelize": "^3.27.0",
+    "sqlite3": "^3.1.8",
     "swagger-jsdoc": "^1.7.0"
   }
 }

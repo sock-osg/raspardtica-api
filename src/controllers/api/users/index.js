@@ -1,20 +1,18 @@
 'use strict';
-var User = require('../../../models/users');
+var restifyHelper = require('../../../helpers/restify'),
+    models = require('../../../models'),
+    userBusiness = require('../../../business/users');
 
 var usersController = {};
 
 usersController.create = function(req, res) {
-  User.create({
-    username: req.body.username,
-    fullName: req.body.fullName
-  }, function(err, user) {
+  userBusiness.create(req.body, function(err, result) {
     if (err) {
-      res.json(err);
-      res.status(500);
+      res.send(restifyHelper.httpError(err));
+    } else {
+      res.send(200, result);
     }
-    res.header('Location', 'users/' + user._id);
-    res.status(201);
-    res.json(user);
+    return next();
   });
 };
 
