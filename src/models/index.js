@@ -5,7 +5,7 @@ var path = require("path");
 var Sequelize = require("sequelize");
 var config = require ("../../config");
 
-var sequelize = new Sequelize('', '', '', {
+var sequelize = new Sequelize('raspardtica-db', null, null, {
     dialect: config.db.dialect,
     storage: config.db.storage,
     pool: config.db.pool,
@@ -17,7 +17,7 @@ var sequelize = new Sequelize('', '', '', {
 var db = {};
 
 fs.readdirSync(__dirname)
-    .filter(function(file){
+    .filter(function(file) {
         return (file.indexOf(".") !== 0) && (file !== "index.js");
     })
     .forEach(function(file) {
@@ -30,6 +30,8 @@ Object.keys(db).forEach(function(modelName) {
         db[modelName].associate(db);
     }
 });
+
+sequelize.sync({force: true});
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

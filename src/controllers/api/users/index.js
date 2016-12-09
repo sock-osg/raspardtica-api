@@ -5,9 +5,10 @@ var restifyHelper = require('../../../helpers/restify'),
 
 var usersController = {};
 
-usersController.create = function(req, res) {
-  userBusiness.create(req.body, function(err, result) {
+usersController.create = function(req, res, next) {
+  userBusiness.addUser(req.body, function(err, result) {
     if (err) {
+      console.log(err);
       res.send(restifyHelper.httpError(err));
     } else {
       res.send(200, result);

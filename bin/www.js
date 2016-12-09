@@ -21,7 +21,7 @@ var path = require('path');
 var routes = require('../src/routes')(server);
 
 var Sequelize = require('sequelize');
-var sequelize = new Sequelize('', '', '', {
+var sequelize = new Sequelize('raspardtica-db', null, null, {
     dialect: config.db.dialect,
     storage: config.db.storage,
     pool: config.db.pool,
@@ -83,8 +83,8 @@ routes.generateRoutes(path.resolve(__dirname + '/..') + '/src/controllers/', fun
   });
 
   server.initialized = true;
-  server.listen(config.port, function () {
-    console.log('listening at port ' + config.port);
+  server.listen(config.server.port, function () {
+    console.log('listening at port ' + config.server.port);
   });
 
   sequelize.authenticate()
@@ -94,6 +94,8 @@ routes.generateRoutes(path.resolve(__dirname + '/..') + '/src/controllers/', fun
     .catch(function(err) {
       console.log("Unable to connect to DataBase", err);
     });
+
+  sequelize.sync({force: true});
 });
 
 module.exports = server;

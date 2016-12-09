@@ -3,7 +3,7 @@
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('users', {
     id: {
-      type: DataTypes.UUID,
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
@@ -30,7 +30,7 @@ module.exports = function(sequelize, DataTypes) {
     tableName: 'users',
     classMethods: {
       associate: function (models) {
-          models.users.belongsTo(models.devices);
+          models.users.hasMany(models.devices);
       }
     }
   });
