@@ -7,10 +7,15 @@ module.exports = (function () {
         port: 8000
       },
       db: {
-        storage: '/apps/oz/services/raspardtika/db/raspardica.sqlite',
+        storage: '/apps/oz/services/raspardtica/db/raspardica.sqlite',
         dialect: 'sqlite',
         pool: 10
-      }
+      },
+      jwt: {
+        key: 'Q29suuGJCNmZ2g7h',
+        algorithm: 'HS256',
+        expiresIn: '2h'
+      },
     },
     prod: {}
   };

@@ -19,7 +19,7 @@ usersController.create = function(req, res, next) {
 
 usersController.routes = [
   {
-    route: '/create',
+    route: '/',
     method: 'post',
     action: 'create'
   }
