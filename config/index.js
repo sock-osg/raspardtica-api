@@ -16,9 +16,18 @@ module.exports = (function () {
         algorithm: 'HS256',
         expiresIn: '2h'
       },
+      cmd: {
+        script: 'remote-mock'
+      }
     },
-    prod: {}
+    beta: {},
+    prod: {},
   };
+
+  Object.assign(config.beta, config.dev);
+  Object.assign(config.prod, config.dev);
+
+  //config.beta.cmd.script = 'remote';
 
   return config[process.env.NODE_ENV || 'dev'];
 })();

@@ -18,7 +18,6 @@ devicesController.create = function(req, res, next) {
 devicesController.getAll = function(req, res, next) {
   devicesBusiness.getAll(req, function(err, result) {
     if (err) {
-      console.log(err)
       res.send(restifyHelper.httpError(err));
     } else {
       res.send(200, result);
@@ -28,9 +27,12 @@ devicesController.getAll = function(req, res, next) {
 };
 
 devicesController.changeStatus = function(req, res, next) {
-  devicesBusiness.changeStatus(req, function(err, result) {
+  var params = req.body;
+  params.deviceId = req.params.deviceId;
+  params.userId = 1;
+
+  devicesBusiness.changeStatus(params, function(err, result) {
     if (err) {
-      console.log(err)
       res.send(restifyHelper.httpError(err));
     } else {
       res.send(200, result);
@@ -51,7 +53,7 @@ devicesController.routes = [
     action: "getAll"
   },
   {
-    route: "/:deviceId/status",
+    route: "/:deviceId",
     method: "put",
     action: "changeStatus"
   }

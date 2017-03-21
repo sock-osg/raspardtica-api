@@ -103,6 +103,7 @@ restifyHelper.httpError = function(err) {
   } else if (err === appError.emptyFile) {
     httpError = new restify.errors.InvalidArgumentError(err);
   } else {
+    console.log(err);
     httpError = new restify.errors.InternalServerError();
   }
 
