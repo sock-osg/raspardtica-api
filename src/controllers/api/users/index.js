@@ -11,7 +11,7 @@ usersController.create = function(req, res, next) {
       console.log(err);
       res.send(restifyHelper.httpError(err));
     } else {
-      res.send(200, result);
+      res.send(201, result);
     }
     return next();
   });

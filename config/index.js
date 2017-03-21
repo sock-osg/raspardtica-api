@@ -7,7 +7,7 @@ module.exports = (function () {
         port: 8000
       },
       db: {
-        storage: '/apps/oz/services/raspardtica/db/raspardica.sqlite',
+        storage: '/apps/oz/services/raspardtica/sqlite/raspardtica.sqlite',
         dialect: 'sqlite',
         pool: 10
       },

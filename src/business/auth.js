@@ -34,14 +34,14 @@ function generateToken(user, cb) {
   //use try catch because jwt.sign callback don't retrive the error
   try {
     var token = jwt.sign({
-      user: user.email,
-      role: user.roleUserId,
+        user: user.email,
+        role: user.roleUserId,
       },
       config.jwt.key,
       {
-      algorithm: config.jwt.algorithm,
-      expiresIn: config.jwt.expiresIn
-    });
+        algorithm: config.jwt.algorithm,
+        expiresIn: config.jwt.expiresIn
+      });
 
     verifyToken(token, function(err, result){
       if (err) {
