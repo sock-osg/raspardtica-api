@@ -8,7 +8,6 @@ var usersController = {};
 usersController.create = function(req, res, next) {
   userBusiness.addUser(req.body, function(err, result) {
     if (err) {
-      console.log(err);
       res.send(restifyHelper.httpError(err));
     } else {
       res.send(201, result);

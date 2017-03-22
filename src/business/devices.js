@@ -29,27 +29,34 @@ devicesBusiness.getAll = function(data, cb) {
 };
 
 devicesBusiness.changeStatus = function(data, cb) {
-  nrfCmd.sendCommand(data.status, data.deviceId, function (cmdError, stdout, stderror) {
-    if (cmdError) {
-      cb(cmdError);
-    } else {
-      return models.devices.update(
-        {
-          status: data.status
-        },
-        {
-          where: {
-            id: data.deviceId,
-            userId: data.userId
+  models.devices.findOne({ where: { id: data.deviceId }}).then(function(device) {
+    if (device) {
+      nrfCmd.sendCommand(data.status, device.nrfId, function (cmdError, stdout, stderror) {
+        console.log(stdout);
+
+        if (cmdError) {
+          cb(cmdError);
+        } else {
+          var rows = stdout.split('\n');
+          var indexOk = rows.lastIndexOf('response: ok');
+          var indexFail = rows.lastIndexOf('response: fail');
+
+          if (indexOk >= 0 && indexFail === -1) {
+            models.devices.update({ status: data.status }, { where: { id: data.deviceId, userId: data.userId }}
+            ).then(function() {
+              cb(undefined, undefined);
+            }).catch(function(error) {
+              cb(error);
+            });
+          } else {
+            cb('Error sending command');
           }
         }
-      ).then(function() {
-        cb(null, {});
-      }).catch(function(error) {
-        cb(error);
       });
+    } else {
+      cb('Not Found');
     }
-  });
+  })
 };
 
 module.exports = devicesBusiness;

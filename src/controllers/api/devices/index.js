@@ -35,7 +35,7 @@ devicesController.changeStatus = function(req, res, next) {
     if (err) {
       res.send(restifyHelper.httpError(err));
     } else {
-      res.send(200, result);
+      res.send(204);
     }
     return next();
   });
