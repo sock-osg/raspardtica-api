@@ -3,8 +3,10 @@ var config = require('../config');
 var restify = require('restify');
 var Logger = new require('bunyan');
 var restifyValidation = require('node-restify-validation');
+
+var acls = require('../src/helpers/acls.js');
 var restifyHelper = require('../src/helpers/restify');
-//var acls = require('../src/helpers/acls.js');
+var authFilter = require('../src/helpers/authFilter.js');
 
 var server = restify.createServer({
   name: 'raspardtica-api',
@@ -33,7 +35,7 @@ var sequelize = new Sequelize('raspardtica-db', null, null, {
 // Middlewares
 server.use(restify.bodyParser({mapParams: false}));
 // Load Acls
-//acls.loadAcls();
+ acls.loadAcls();
 
 server.use(restify.queryParser());
 server.use(restifyValidation.validationPlugin({errorHandler: restify.errors.InvalidArgumentError}));
@@ -54,6 +56,17 @@ server.on("MethodNotAllowed", function(request, response) {
   } else {
     response.send(new restify.MethodNotAllowedError());
   }
+});
+
+server.pre(function(request, response, next) {
+  authFilter.authorization(request, function(err, result) {
+    if (err) {
+      response.send(new restify.UnauthorizedError());
+    } else {
+      request.log.info({req: request}, 'REQUEST');
+      next();
+    }
+ });
 });
 
 routes.generateRoutes(path.resolve(__dirname + '/..') + '/src/controllers/', function (err, routes) {

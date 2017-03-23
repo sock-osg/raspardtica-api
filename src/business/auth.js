@@ -13,7 +13,7 @@ authBusiness.authenticate = function(data, cb) {
     if (user) {
       var password = tools.encryptPassword(data.password);
 
-      if (user.password == password) {
+      if (user.password === password) {
         generateToken(user, function(error, response) {
           if (error) {
             return cb(error, null);
@@ -35,7 +35,8 @@ function generateToken(user, cb) {
   try {
     var token = jwt.sign({
         user: user.email,
-        role: user.roleUserId,
+        role: 'ROLE_ALL',
+        uuid: user.id,
       },
       config.jwt.key,
       {
