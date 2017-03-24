@@ -5,7 +5,7 @@ var devicesBusiness = require('./../../../business/devices');
 var devicesController = {};
 
 devicesController.create = function(req, res, next) {
-  devicesBusiness.create(req.body, function(err, result) {
+  devicesBusiness.create(req, function(err, result) {
     if (err) {
       res.send(restifyHelper.httpError(err));
     } else {
@@ -27,11 +27,7 @@ devicesController.getAll = function(req, res, next) {
 };
 
 devicesController.changeStatus = function(req, res, next) {
-  var params = req.body;
-  params.deviceId = req.params.deviceId;
-  params.userId = 1;
-
-  devicesBusiness.changeStatus(params, function(err, result) {
+  devicesBusiness.changeStatus(req, function(err, result) {
     if (err) {
       res.send(restifyHelper.httpError(err));
     } else {

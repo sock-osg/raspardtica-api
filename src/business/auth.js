@@ -30,6 +30,8 @@ authBusiness.authenticate = function(data, cb) {
   });
 };
 
+authBusiness.getDecodedToken = verifyToken;
+
 function generateToken(user, cb) {
   //use try catch because jwt.sign callback don't retrive the error
   try {

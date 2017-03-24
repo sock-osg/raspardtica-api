@@ -11,6 +11,7 @@ var validatorUrl = {
 		ROLE_ALL: [
       {resources:'/api/auth', regExp :'(/api/auth)'},
 			{resources:'/api/devices', regExp :'(/api/devices)'},
+			{resources:'/api/users', regExp :'(/api/users)'},
       {resources:'/favicon.ico', regExp :'(/favicon.ico)'},
     ],
   }
@@ -25,6 +26,7 @@ aclsHelper.loadAcls = function (){
       allows: [
         {resources:'/api/auth', permissions:['POST']},
 				{resources:'/api/devices', permissions:['GET', 'POST', 'PUT']},
+				{resources:'/api/users', permissions:['POST']},
         {resources:'/favicon.ico', permissions :['GET']},
       ]
     },

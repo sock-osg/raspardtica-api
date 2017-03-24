@@ -8,9 +8,9 @@ var acls = require('./acls.js');
 var authFilter = {};
 
 function validateAuthorization(token, url, method, cb) {
-  logger.info("## Validating token: " + token);
+  var _token = token.substring(7);
 
-  jwt.verify(token, config.jwt.key, function(err, decoded) {
+  jwt.verify(_token, config.jwt.key, function(err, decoded) {
     if (err) {
       logger.error(new Error(err));
       cb(appError.authTokenError, null);
@@ -33,7 +33,7 @@ authFilter.authorization = function(req, cb) {
     if (req.headers.authorization) {
       token = req.headers.authorization;
 
-      validateAuthorization(token, url, method,function(err, result) {
+      validateAuthorization(token, url, method, function(err, result) {
         if (err) {
           cb(appError.authTokenError, null);
         } else {
