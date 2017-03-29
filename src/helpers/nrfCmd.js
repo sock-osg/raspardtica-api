@@ -11,7 +11,7 @@ nrfCommand.CMD = {
 };
 
 nrfCommand.sendCommand = function(command, deviceId, cb) {
-  exec(config.cmd.script, ['-a', command, '-d', deviceId], cb);
+  exec(config.cmd.script + ' -a ' + this.CMD[command] + ' -d ' + deviceId, cb);
 };
 
 module.exports = nrfCommand;

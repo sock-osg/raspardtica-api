@@ -55,12 +55,13 @@ devicesBusiness.getAll = function(req, cb) {
 
 devicesBusiness.changeStatus = function(req, cb) {
   var token = req.headers.authorization.split(' ')[1];
+  var deviceId = req.params.deviceId;
   var data = req.body;
   authBusiness.getDecodedToken(token, function(error, decodedToken) {
     if (error) {
       cb(error);
     } else {
-      models.devices.findOne({ where: { id: data.deviceId }}).then(function(device) {
+      models.devices.findOne({ where: { id: deviceId }}).then(function(device) {
         if (device) {
           nrfCmd.sendCommand(data.status, device.nrfId, function (cmdError, stdout, stderror) {
             if (cmdError) {

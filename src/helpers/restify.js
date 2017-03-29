@@ -1,6 +1,7 @@
 'use strict';
 var restify = require('restify');
 var appError = require('./appErrors');
+var Logger = require('./logger')
 
 /** @exports restifyHelper **/
 var restifyHelper = {};
@@ -103,7 +104,7 @@ restifyHelper.httpError = function(err) {
   } else if (err === appError.emptyFile) {
     httpError = new restify.errors.InvalidArgumentError(err);
   } else {
-    console.log(err);
+    Logger.error(err);
     httpError = new restify.errors.InternalServerError();
   }
 
