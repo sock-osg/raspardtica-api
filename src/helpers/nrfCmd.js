@@ -5,13 +5,13 @@ var config = require('./../../config');
 var nrfCommand = {};
 
 nrfCommand.CMD = {
-  ON: 81,
-  OFF: 80,
-  STATUS: 82
+  ON: 1,
+  OFF: 0,
+  STATUS: 2
 };
 
-nrfCommand.sendCommand = function(command, deviceId, cb) {
-  exec(config.cmd.script + ' -a ' + this.CMD[command] + ' -d ' + deviceId, cb);
+nrfCommand.sendCommand = function(command, portNumber, deviceId, cb) {
+  exec(config.cmd.script + ' -a ' + portNumber + this.CMD[command] + ' -d ' + deviceId, cb);
 };
 
 module.exports = nrfCommand;

@@ -63,7 +63,7 @@ devicesBusiness.changeStatus = function(req, cb) {
     } else {
       models.devices.findOne({ where: { id: deviceId }}).then(function(device) {
         if (device) {
-          nrfCmd.sendCommand(data.status, device.nrfId, function (cmdError, stdout, stderror) {
+          nrfCmd.sendCommand(data.status, device.portNumber, device.nrfId, function (cmdError, stdout, stderror) {
             if (cmdError) {
               cb(cmdError);
             } else {
