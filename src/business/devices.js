@@ -20,6 +20,7 @@ devicesBusiness.create = function(req, cb) {
     } else {
       models.devices.create({
         nrfId: data.nrfId,
+        portNumber: data.portNumber,
         alias: data.alias,
         description: data.description,
         status: 'OFF',
@@ -41,8 +42,7 @@ devicesBusiness.getAll = function(req, cb) {
     } else {
       models.devices.findAll({
         where: {
-          userId: decodedToken.uuid,
-          status: 'OFF',
+          userId: decodedToken.uuid
         }
       }).then(function(devices) {
         cb(null, devices);
@@ -72,7 +72,7 @@ devicesBusiness.changeStatus = function(req, cb) {
               var indexFail = rows.lastIndexOf('response: fail');
 
               if (indexOk >= 0 && indexFail === -1) {
-                models.devices.update({ status: data.status }, { where: { id: data.deviceId, userId: decodedToken.uuid }}
+                models.devices.update({ status: data.status }, { where: { id: deviceId, userId: decodedToken.uuid }}
                 ).then(function() {
                   cb(undefined, undefined);
                 }).catch(function(error) {

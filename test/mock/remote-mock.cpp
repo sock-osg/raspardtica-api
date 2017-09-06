@@ -6,6 +6,15 @@
 
 static int verbose_flag;
 
+/*
+ * Use remote command to send message to arduino (use sudo!)
+ * Message should be in this format: [id pin number][action to do]
+ * We've set relay at pin 8 and actions are:
+ * 0: turn off
+ * 1: turn on
+ * 2: get the actual state
+*/
+
 int sendCommand(char* action, uint64_t* device) {
   printf("Talking with my NRF24l01+ friends out there....\n");
 
@@ -13,15 +22,13 @@ int sendCommand(char* action, uint64_t* device) {
 	uint64_t failDevice = 0xF0F0F0F0F0F0;
 
   printf("Now sending %lu...\n", message);
+  sleep(1);
 
   if (*device == failDevice) {
     printf("response: fail\n");
   } else {
 		printf("response: ok\n");
   }
-
-
-  sleep(1);
 
   return 0;
 }
