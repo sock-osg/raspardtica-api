@@ -12,15 +12,15 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     alias: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(20),
       allowNull: false
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(200),
       allowNull: true
     },
     status: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(3),
       allowNull: false
     },
     userId: {

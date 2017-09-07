@@ -10,19 +10,19 @@ module.exports = function(sequelize, DataTypes) {
       unique: true
     },
     firstName: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(75),
       allowNull: false
     },
     lastName: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(75),
       allowNull: false
     },
     password: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(90),
       allowNull: false
     },
     email: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: false,
       unique: true
     }
