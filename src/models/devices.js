@@ -11,6 +11,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.UUID,
       allowNull: false
     },
+    portNumber: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     alias: {
       type: DataTypes.STRING(20),
       allowNull: false
