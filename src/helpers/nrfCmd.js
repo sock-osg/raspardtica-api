@@ -11,7 +11,9 @@ nrfCommand.CMD = {
 };
 
 nrfCommand.sendCommand = function(command, portNumber, deviceId, cb) {
-  exec(config.cmd.script + ' -a ' + portNumber + this.CMD[command] + ' -d ' + deviceId, cb);
+  exec(config.cmd.script
+        + ' -a ' + portNumber + this.CMD[command]
+        + ' -d ' + deviceId, cb);
 };
 
 module.exports = nrfCommand;

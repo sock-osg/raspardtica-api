@@ -27,7 +27,8 @@ module.exports = function(server) {
           try {
             var controller = require(controllers[i]);
             var relativePath = path.relative(__dirname, controllers[i]);
-            var dirname = path.sep + path.dirname(relativePath.split(path.sep).slice(2).join(path.sep));
+            var dirname = path.sep + path.dirname(
+                        relativePath.split(path.sep).slice(2).join(path.sep));
             console.log('Loading routes from: ' + controllers[i]);
             routes._createRoutes(controller, dirname);
           } catch (err) {
@@ -37,6 +38,7 @@ module.exports = function(server) {
         return cb(null, controllers);
       });
     },
+
     /**
      * Creates a route from a controllers object
      * @param {Object} controller - The controllers to be added as a route
