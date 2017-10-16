@@ -19,12 +19,34 @@ module.exports = function(sequelize, DataTypes) {
     },
     password: {
       type: DataTypes.STRING(90),
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
     },
     email: {
       type: DataTypes.STRING(50),
       allowNull: false,
-      unique: true
+      unique: true,
+      validate: {
+        isEmail: true
+      }
+    },
+    twitter: {
+      type: DataTypes.STRING(25),
+      allowNull: false,
+      unique: true,
+      validate: {
+        is: /^@.+$/i
+      }
+    },
+    userType: {
+      type: DataTypes.STRING(6),
+      allowNull: false,
+      unique: true,
+      validate: {
+        isIn: [['MASTER', 'SLAVE']]
+      }
     }
   }, {
     tableName: 'users',

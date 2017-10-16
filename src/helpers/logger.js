@@ -9,7 +9,7 @@ var logger = new winston.Logger({
       timestamp: true,
       level: 'debug',
       datePattern: '.yyyy-MM-dd.log',
-      filename: './log/bccetificationRest',
+      filename: './log/raspardtica-api',
       handleExceptions: true,
       json: true,
       maxsize: 5242880, //5MB

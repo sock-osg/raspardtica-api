@@ -17,7 +17,7 @@ module.exports = (function () {
         expiresIn: '2h'
       },
       cmd: {
-        script: 'sudo remote'
+        script: 'remote-mock'
       }
     },
     beta: {},

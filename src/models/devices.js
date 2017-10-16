@@ -9,11 +9,19 @@ module.exports = function(sequelize, DataTypes) {
     },
     nrfId: {
       type: DataTypes.UUID,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        is: /^0x[\da-f]+]$/i
+      }
     },
     portNumber: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isNumeric: true,
+        min: 1,
+        max: 13
+      }
     },
     alias: {
       type: DataTypes.STRING(20),
@@ -25,7 +33,10 @@ module.exports = function(sequelize, DataTypes) {
     },
     status: {
       type: DataTypes.STRING(3),
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isIn: [['ON', 'OFF']]
+      }
     },
     userId: {
       type: DataTypes.INTEGER,
