@@ -5,7 +5,10 @@ var devicesBusiness = require('./../../../business/devices');
 var devicesController = {};
 
 devicesController.create = function(req, res, next) {
-  devicesBusiness.create(req, function(err, result) {
+  var data = req.body;
+  var token = req.headers.authorization.split(' ')[1];
+
+  devicesBusiness.create(data, token, function(err, result) {
     if (err) {
       res.send(restifyHelper.httpError(err));
     } else {

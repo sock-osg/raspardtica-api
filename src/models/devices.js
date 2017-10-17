@@ -34,6 +34,7 @@ module.exports = function(sequelize, DataTypes) {
     status: {
       type: DataTypes.STRING(3),
       allowNull: false,
+      defaultValue: 'OFF',
       validate: {
         isIn: [['ON', 'OFF']]
       }

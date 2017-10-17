@@ -3,21 +3,18 @@ var models = require('../models'),
     tools = require('../helpers/tools'),
     appError = require('../helpers/appErrors')
 ;
+var Sequelize = require('sequelize');
 
 var usersBusiness = {};
 
 usersBusiness.addUser = function(data, cb) {
-  return models.users.create({
-    firstName: data.firstName,
-    lastName: data.lastName,
-    password: tools.encryptPassword(data.password),
-    email: data.email,
-  }).then(function(createdUser) {
+  data.password = tools.encryptPassword(data.password);
+  return models.users.create(data).then(function(createdUser) {
     createdUser.password = null;
     cb(null, createdUser);
+  }).catch(Sequelize.ValidationError, function(error) {
+    cb(appError.badRequestError);
   }).catch(function(error) {
-    console.log(error);
-
     cb(error);
   });
 };

@@ -51,7 +51,7 @@ module.exports = function(server) {
       path = path || '';
       for (var i = 0; i < controller.routes.length; i++) {
         var route = controller.routes[i];
-        server[route.method](path + route.route, controller[route.action]);
+        server[route.method]({ url: path + route.route, validation: route.validation }, controller[route.action]);
       }
     }
   };

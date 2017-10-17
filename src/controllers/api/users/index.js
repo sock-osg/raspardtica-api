@@ -20,7 +20,38 @@ usersController.routes = [
   {
     route: '/',
     method: 'post',
-    action: 'create'
+    action: 'create',
+    validation: {
+      content: {
+        firstName: {
+          isRequired: true,
+          isString: true
+        },
+        lastName: {
+          isRequired: true,
+          isString: true
+        },
+        password: {
+          isRequired: true,
+          isString: true
+        },
+        email: {
+          isRequired: true,
+          isString: true,
+          isEmail: true
+        },
+        twitter: {
+          isRequired: true,
+          isString: true,
+          is: /^@.+$/i
+        },
+        userType: {
+          isRequired: true,
+          isString: true,
+          isIn: ['MASTER', 'SLAVE']
+        }
+      }
+    }
   }
 ];
 

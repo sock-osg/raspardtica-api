@@ -12,11 +12,12 @@ restifyHelper.httpError = function(err) {
   var httpError;
   if (err === appError.loginUserError) {
     httpError = new restify.errors.InvalidCredentialsError(err);
-  } else if (err === appError.authTokenError) {
+  } else if (err === appError.authTokenError
+        || err === appError.badRequestError) {
     httpError = new restify.errors.BadRequestError(err);
   } else {
     Logger.error(err);
-    httpError = new restify.errors.InternalServerError();
+    httpError = new restify.errors.InternalServerError(err);
   }
 
   return httpError;

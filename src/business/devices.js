@@ -10,22 +10,14 @@ var authBusiness = require('./auth');
 
 var devicesBusiness = {};
 
-devicesBusiness.create = function(req, cb) {
-  var data = req.body;
-  var token = req.headers.authorization.split(' ')[1];
-
+devicesBusiness.create = function(data, token, cb) {
   authBusiness.getDecodedToken(token, function(error, decodedToken) {
     if (error) {
       cb(error);
     } else {
-      models.devices.create({
-        nrfId: data.nrfId,
-        portNumber: data.portNumber,
-        alias: data.alias,
-        description: data.description,
-        status: 'OFF',
-        userId: decodedToken.uuid
-      }).then(function(createdDevice) {
+      data.userId = decodedToken.uuid;
+
+      models.devices.create(data).then(function(createdDevice) {
         cb(null, createdDevice);
       }).catch(function(error) {
         cb(error);
