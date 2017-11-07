@@ -15,6 +15,8 @@ restifyHelper.httpError = function(err) {
   } else if (err === appError.authTokenError
         || err === appError.badRequestError) {
     httpError = new restify.errors.BadRequestError(err);
+  } else if (err == appError.resourceNotFound) {
+    httpError = new restify.errors.NotFoundError(err);
   } else {
     Logger.error(err);
     httpError = new restify.errors.InternalServerError(err);

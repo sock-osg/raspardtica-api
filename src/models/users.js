@@ -45,7 +45,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       unique: true,
       validate: {
-        isIn: [['MASTER', 'SLAVE']]
+        isIn: [['ROOT', 'MASTER', 'SLAVE']]
       }
     }
   }, {

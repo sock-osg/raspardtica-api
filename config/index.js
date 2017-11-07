@@ -20,14 +20,14 @@ module.exports = (function () {
         script: 'remote-mock'
       }
     },
-    beta: {},
-    prod: {},
+    beta: {
+    },
+    prod: {
+      jwt: {
+        key: process.env.JWT_KEY
+      }
+    },
   };
 
-  Object.assign(config.beta, config.dev);
-  Object.assign(config.prod, config.dev);
-
-  //config.beta.cmd.script = 'remote';
-
-  return config[process.env.NODE_ENV || 'dev'];
+  return Object.assign({}, config.dev, config[process.env.NODE_ENV || 'dev']);
 })();

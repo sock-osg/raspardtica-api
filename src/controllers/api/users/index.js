@@ -48,7 +48,7 @@ usersController.routes = [
         userType: {
           isRequired: true,
           isString: true,
-          isIn: ['MASTER', 'SLAVE']
+          isIn: ['ROOT', 'MASTER', 'SLAVE']
         }
       }
     }

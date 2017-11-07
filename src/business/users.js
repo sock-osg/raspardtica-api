@@ -10,7 +10,7 @@ var usersBusiness = {};
 usersBusiness.addUser = function(data, cb) {
   data.password = tools.encryptPassword(data.password);
   return models.users.create(data).then(function(createdUser) {
-    createdUser.password = null;
+    createdUser.password = undefined;
     cb(null, createdUser);
   }).catch(Sequelize.ValidationError, function(error) {
     cb(appError.badRequestError);

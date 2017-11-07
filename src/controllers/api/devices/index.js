@@ -40,6 +40,23 @@ devicesController.changeStatus = function(req, res, next) {
   });
 };
 
+devicesController.availablePorts = function(req, res, next) {
+  var token = req.headers.authorization.split(' ')[1];
+  var dataReques = {
+    token: token,
+    address: req.params.address
+  };
+
+  devicesBusiness.availablePorts(dataReques, function(err, result) {
+    if (err) {
+      res.send(restifyHelper.httpError(err));
+    } else {
+      res.send(200, result);
+    }
+    return next();
+  });
+};
+
 devicesController.routes = [
   {
     route: "/",
@@ -55,6 +72,11 @@ devicesController.routes = [
     route: "/:deviceId",
     method: "put",
     action: "changeStatus"
+  },
+  {
+    route: "/available",
+    method: "get",
+    action: "availablePorts"
   }
 ];
 
