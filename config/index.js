@@ -24,7 +24,9 @@ module.exports = (function () {
     },
     prod: {
       jwt: {
-        key: process.env.JWT_KEY
+        key: process.env.JWT_KEY,
+        algorithm: 'HS256',
+        expiresIn: '2h'
       }
     },
   };
